@@ -2,10 +2,13 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("./models/user");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 const db = "mongodb://feras97:f2714188@ds263380.mlab.com:63380/bff";
 
 const PORT = 3000;
 const app = express();
+
+app.use(bodyParser.json());
 
 
 mongoose.connect(db, err => {
