@@ -21,7 +21,7 @@ app.get("/", function(req,res){
     res.send("Hello from 'Server");
 });
 
-router.post("/login", (req,res) => {
+app.post("/login", (req,res) => {
     let userData = req.body;
     User.findOne({email: userData.email}, (error, user) => {
         if(error){
