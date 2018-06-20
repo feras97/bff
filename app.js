@@ -70,7 +70,7 @@ app.post("/register", (req, res) => {
 
 app.post("/newtext", (req, res) => {
     let text = req.body;
-    User.findOneAndUpdate({email: user.email}, { $push: 
+    User.findOneAndUpdate({email: text.email}, { $push: 
         {messages: {
         "sender": 1,
         "text": text.text,
