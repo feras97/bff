@@ -36,7 +36,7 @@ app.post("/login", (req,res) => {
             } else if(user.password != userData.password){
                 res.status(401).send("Invalid Password!");
             }else{
-                res.status(200).send("login successful: " + user.email);
+                res.status(200).send(user.email);
             }
         }
     });
@@ -62,7 +62,7 @@ app.post("/register", (req, res) => {
                     }
                 });
             }else{
-                res.status(401).send("User exists: " + user.email);
+                res.status(401).send(user.email);
             }
         }
     });
