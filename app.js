@@ -20,9 +20,10 @@ mongoose.connect(db, err => {
     }
 });
 
-app.get("/", function(req,res){
-    res.send("Hello from 'Server");
+app.get("/", (req,res) => {
+    res.send("welcome king of teezos!");
 });
+
 
 app.post("/login", (req,res) => {
     let userData = req.body;
@@ -35,7 +36,7 @@ app.post("/login", (req,res) => {
             } else if(user.password != userData.password){
                 res.status(401).send("Invalid Password!");
             }else{
-                res.status(200).send({user});
+                res.status(200).send("login successful: " + user.email);
             }
         }
     });
@@ -43,6 +44,10 @@ app.post("/login", (req,res) => {
 
 app.post("/register", (req, res) => {
     let userData = req.body;
+    userData.messages = [{
+        "sender": 0,
+        "text": "heyyy babe, what you need?",
+    }];
     let user = new User(userData);
     User.findOne({email: user.email}, (err, found) => {
         if(err){
@@ -53,12 +58,28 @@ app.post("/register", (req, res) => {
                     if(error){
                         console.error(error);
                     }else{
-                        res.status(200).send("email registred successfully: " + registeredUser.email);
+                        res.status(200).send("email registred successfully: " + user.email);
                     }
                 });
             }else{
-                res.status(200).send("User exist: " + user.email);
+                res.status(401).send("User exists: " + user.email);
             }
+        }
+    });
+});
+
+app.post("/newtext", (req, res) => {
+    let userData = req.body;
+    let user = new User(userData);
+    User.findOneAndUpdate({email: user.email}, { $push: 
+        {messages: {
+        "sender": 0,
+        "text": "heyyy babe, what you need?",
+    }}}, {new: true}, (err, found) => {
+        if(err){
+            res.send(err);
+        } else {
+            res.send(found);
         }
     });
 });
