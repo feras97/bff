@@ -69,12 +69,11 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/newtext", (req, res) => {
-    let userData = req.body;
-    let user = new User(userData);
+    let text = req.body;
     User.findOneAndUpdate({email: user.email}, { $push: 
         {messages: {
-        "sender": 0,
-        "text": "heyyy babe, what you need?",
+        "sender": 1,
+        "text": text.text,
     }}}, {new: true}, (err, found) => {
         if(err){
             res.send(err);
