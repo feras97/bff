@@ -83,6 +83,21 @@ app.post("/newtext", (req, res) => {
     });
 });
 
+app.post("/newtext", (req, res) => {
+    let text = req.body;
+    User.findOneAndUpdate({email: text.email}, { $push: 
+        {messages: {
+        "sender": 1,
+        "text": text.text,
+    }}}, {new: true}, (err, found) => {
+        if(err){
+            res.send(err);
+        } else {
+            res.send(found);
+        }
+    });
+});
+
 app.listen(PORT, function(){
     console.log("Server Started !");
 });
